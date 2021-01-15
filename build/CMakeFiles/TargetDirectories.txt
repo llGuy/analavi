@@ -1,0 +1,3 @@
+/home/lucro/Development/analavi/build/CMakeFiles/rebuild_cache.dir
+/home/lucro/Development/analavi/build/CMakeFiles/analavi.dir
+/home/lucro/Development/analavi/build/CMakeFiles/edit_cache.dir

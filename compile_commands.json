@@ -1,77 +1,227 @@
 [
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui.cpp",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lapi.c.o   -c /home/lucro/Development/analavi/lua/lapi.c",
+  "file": "/home/lucro/Development/analavi/lua/lapi.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lauxlib.c.o   -c /home/lucro/Development/analavi/lua/lauxlib.c",
+  "file": "/home/lucro/Development/analavi/lua/lauxlib.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lbaselib.c.o   -c /home/lucro/Development/analavi/lua/lbaselib.c",
+  "file": "/home/lucro/Development/analavi/lua/lbaselib.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lcode.c.o   -c /home/lucro/Development/analavi/lua/lcode.c",
+  "file": "/home/lucro/Development/analavi/lua/lcode.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/ldblib.c.o   -c /home/lucro/Development/analavi/lua/ldblib.c",
+  "file": "/home/lucro/Development/analavi/lua/ldblib.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/ldebug.c.o   -c /home/lucro/Development/analavi/lua/ldebug.c",
+  "file": "/home/lucro/Development/analavi/lua/ldebug.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/ldo.c.o   -c /home/lucro/Development/analavi/lua/ldo.c",
+  "file": "/home/lucro/Development/analavi/lua/ldo.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/ldump.c.o   -c /home/lucro/Development/analavi/lua/ldump.c",
+  "file": "/home/lucro/Development/analavi/lua/ldump.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lfunc.c.o   -c /home/lucro/Development/analavi/lua/lfunc.c",
+  "file": "/home/lucro/Development/analavi/lua/lfunc.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lgc.c.o   -c /home/lucro/Development/analavi/lua/lgc.c",
+  "file": "/home/lucro/Development/analavi/lua/lgc.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/linit.c.o   -c /home/lucro/Development/analavi/lua/linit.c",
+  "file": "/home/lucro/Development/analavi/lua/linit.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/liolib.c.o   -c /home/lucro/Development/analavi/lua/liolib.c",
+  "file": "/home/lucro/Development/analavi/lua/liolib.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/llex.c.o   -c /home/lucro/Development/analavi/lua/llex.c",
+  "file": "/home/lucro/Development/analavi/lua/llex.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lmathlib.c.o   -c /home/lucro/Development/analavi/lua/lmathlib.c",
+  "file": "/home/lucro/Development/analavi/lua/lmathlib.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lmem.c.o   -c /home/lucro/Development/analavi/lua/lmem.c",
+  "file": "/home/lucro/Development/analavi/lua/lmem.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/loadlib.c.o   -c /home/lucro/Development/analavi/lua/loadlib.c",
+  "file": "/home/lucro/Development/analavi/lua/loadlib.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lobject.c.o   -c /home/lucro/Development/analavi/lua/lobject.c",
+  "file": "/home/lucro/Development/analavi/lua/lobject.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lopcodes.c.o   -c /home/lucro/Development/analavi/lua/lopcodes.c",
+  "file": "/home/lucro/Development/analavi/lua/lopcodes.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/loslib.c.o   -c /home/lucro/Development/analavi/lua/loslib.c",
+  "file": "/home/lucro/Development/analavi/lua/loslib.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lparser.c.o   -c /home/lucro/Development/analavi/lua/lparser.c",
+  "file": "/home/lucro/Development/analavi/lua/lparser.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lstate.c.o   -c /home/lucro/Development/analavi/lua/lstate.c",
+  "file": "/home/lucro/Development/analavi/lua/lstate.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lstring.c.o   -c /home/lucro/Development/analavi/lua/lstring.c",
+  "file": "/home/lucro/Development/analavi/lua/lstring.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lstrlib.c.o   -c /home/lucro/Development/analavi/lua/lstrlib.c",
+  "file": "/home/lucro/Development/analavi/lua/lstrlib.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/ltable.c.o   -c /home/lucro/Development/analavi/lua/ltable.c",
+  "file": "/home/lucro/Development/analavi/lua/ltable.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/ltablib.c.o   -c /home/lucro/Development/analavi/lua/ltablib.c",
+  "file": "/home/lucro/Development/analavi/lua/ltablib.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/ltm.c.o   -c /home/lucro/Development/analavi/lua/ltm.c",
+  "file": "/home/lucro/Development/analavi/lua/ltm.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lua.c.o   -c /home/lucro/Development/analavi/lua/lua.c",
+  "file": "/home/lucro/Development/analavi/lua/lua.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/luac.c.o   -c /home/lucro/Development/analavi/lua/luac.c",
+  "file": "/home/lucro/Development/analavi/lua/luac.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lundump.c.o   -c /home/lucro/Development/analavi/lua/lundump.c",
+  "file": "/home/lucro/Development/analavi/lua/lundump.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lvm.c.o   -c /home/lucro/Development/analavi/lua/lvm.c",
+  "file": "/home/lucro/Development/analavi/lua/lvm.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/lzio.c.o   -c /home/lucro/Development/analavi/lua/lzio.c",
+  "file": "/home/lucro/Development/analavi/lua/lzio.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/cc  -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -o CMakeFiles/lua.dir/lua/print.c.o   -c /home/lucro/Development/analavi/lua/print.c",
+  "file": "/home/lucro/Development/analavi/lua/print.c"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui.cpp",
   "file": "/home/lucro/Development/analavi/imgui/lib/imgui.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_demo.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_demo.cpp",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_demo.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_demo.cpp",
   "file": "/home/lucro/Development/analavi/imgui/lib/imgui_demo.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_draw.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_draw.cpp",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_draw.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_draw.cpp",
   "file": "/home/lucro/Development/analavi/imgui/lib/imgui_draw.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_impl_opengl3.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_impl_opengl3.cpp",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_impl_opengl3.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_impl_opengl3.cpp",
   "file": "/home/lucro/Development/analavi/imgui/lib/imgui_impl_opengl3.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_impl_sdl.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_impl_sdl.cpp",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_impl_sdl.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_impl_sdl.cpp",
   "file": "/home/lucro/Development/analavi/imgui/lib/imgui_impl_sdl.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_tables.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_tables.cpp",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_tables.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_tables.cpp",
   "file": "/home/lucro/Development/analavi/imgui/lib/imgui_tables.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_widgets.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_widgets.cpp",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/imgui/lib/imgui_widgets.cpp.o -c /home/lucro/Development/analavi/imgui/lib/imgui_widgets.cpp",
   "file": "/home/lucro/Development/analavi/imgui/lib/imgui_widgets.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/context.cpp.o -c /home/lucro/Development/analavi/source/context.cpp",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/context.cpp.o -c /home/lucro/Development/analavi/source/context.cpp",
   "file": "/home/lucro/Development/analavi/source/context.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/main.cpp.o -c /home/lucro/Development/analavi/source/main.cpp",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/controller.cpp.o -c /home/lucro/Development/analavi/source/controller.cpp",
+  "file": "/home/lucro/Development/analavi/source/controller.cpp"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/main.cpp.o -c /home/lucro/Development/analavi/source/main.cpp",
   "file": "/home/lucro/Development/analavi/source/main.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/ui.cpp.o -c /home/lucro/Development/analavi/source/ui.cpp",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/output.cpp.o -c /home/lucro/Development/analavi/source/output.cpp",
+  "file": "/home/lucro/Development/analavi/source/output.cpp"
+},
+{
+  "directory": "/home/lucro/Development/analavi/build",
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/ui.cpp.o -c /home/lucro/Development/analavi/source/ui.cpp",
   "file": "/home/lucro/Development/analavi/source/ui.cpp"
 },
 {
   "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/ui_panel_controller.cpp.o -c /home/lucro/Development/analavi/source/ui_panel_controller.cpp",
-  "file": "/home/lucro/Development/analavi/source/ui_panel_controller.cpp"
-},
-{
-  "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/ui_panel_file_browser.cpp.o -c /home/lucro/Development/analavi/source/ui_panel_file_browser.cpp",
-  "file": "/home/lucro/Development/analavi/source/ui_panel_file_browser.cpp"
-},
-{
-  "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/ui_panel_master.cpp.o -c /home/lucro/Development/analavi/source/ui_panel_master.cpp",
-  "file": "/home/lucro/Development/analavi/source/ui_panel_master.cpp"
-},
-{
-  "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/ui_panel_output.cpp.o -c /home/lucro/Development/analavi/source/ui_panel_output.cpp",
-  "file": "/home/lucro/Development/analavi/source/ui_panel_output.cpp"
-},
-{
-  "directory": "/home/lucro/Development/analavi/build",
-  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/ui_panel_video_viewer.cpp.o -c /home/lucro/Development/analavi/source/ui_panel_video_viewer.cpp",
-  "file": "/home/lucro/Development/analavi/source/ui_panel_video_viewer.cpp"
+  "command": "/usr/bin/c++   -I/home/lucro/Development/analavi/imgui/include -isystem /usr/include/opencv -I/usr/include/SDL2 -I/home/lucro/Development/analavi/lua  -g   -std=gnu++1z -o CMakeFiles/analavi.dir/source/video_viewer.cpp.o -c /home/lucro/Development/analavi/source/video_viewer.cpp",
+  "file": "/home/lucro/Development/analavi/source/video_viewer.cpp"
 }
 ]

@@ -5,3 +5,5 @@
  */
 void prepare_imgui();
 void tick_gui();
+
+void print_to_controller_output(const char *str);

@@ -5,9 +5,13 @@
 #include "controller.hpp"
 #include "video_viewer.hpp"
 
+#include <TextEditor.h>
+
 static ImFont *clean_font;
 static ImFont *code_font;
 static ImGui::FileBrowser file_dialog;
+
+static TextEditor editor;
 
 constexpr uint32_t MAX_CHARS_IN_CONTROLLER_OUTPUT = 10000;
 
@@ -43,6 +47,8 @@ void prepare_imgui() {
 
     memcpy(controller_panel.cmd_window, controller_panel.prompt, strlen(controller_panel.prompt));
     controller_panel.char_pointer += strlen(controller_panel.prompt);
+
+    // auto lang = TextEditor::LanguageDefinition::
 }
 
 static ImGuiID s_tick_panel_master() {
@@ -170,16 +176,16 @@ static void s_tick_panel_output(ImGuiID master) {
 static void s_tick_panel_video_viewer(ImGuiID master) {
     ImGui::PushFont(clean_font);
 
-    // ImGui::SetNextWindowDockID(master, ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowDockID(master, ImGuiCond_FirstUseEver);
     ImGui::Begin("Video Viewer");
 
     if (loaded_video()) {
         frame_t *frame = get_current_frame();
         ImGui::Image((void *)frame->texture, ImVec2(frame->width, frame->height));
-    }
 
-    float progress;
-    ImGui::SliderFloat("Time", &progress, 0.0f, 5.0f, "%.2fs");
+        float progress;
+        ImGui::SliderFloat("Time", &progress, 0.0f, 5.0f, "%.2fs");
+    }
         
     ImGui::End();
 
@@ -194,6 +200,8 @@ void tick_gui() {
     s_tick_panel_file_browser();
     s_tick_panel_output(master_id);
     s_tick_panel_video_viewer(master_id);
+
+
 
     ImGui::Render();
 }

@@ -1,7 +1,9 @@
 #include <imgui.h>
+#include "ui.hpp"
 #include <imfilebrowser.h>
 
 #include "controller.hpp"
+#include "video_viewer.hpp"
 
 static ImFont *clean_font;
 static ImFont *code_font;
@@ -102,6 +104,13 @@ void print_to_controller_output(const char *str) {
     }
 }
 
+void begin_controller_cmd(const char *cmd) {
+    print_to_controller_output(cmd);
+    print_to_controller_output("\n");
+
+    submit_cmdstr(cmd);
+}
+
 void finish_controller_cmd() {
     print_to_controller_output("\n> ");
 }
@@ -113,17 +122,14 @@ static void s_tick_panel_controller(ImGuiID master) {
     ImGui::Begin("Controller");
 
     if (ImGui::InputText("Command", controller_panel.cmdbuf, 1000, ImGuiInputTextFlags_EnterReturnsTrue)) {
-        print_to_controller_output(controller_panel.cmdbuf);
-        print_to_controller_output("\n");
-
-        submit_cmdstr(controller_panel.cmdbuf);
+        begin_controller_cmd(controller_panel.cmdbuf);
 
         memset(controller_panel.cmdbuf, 0, sizeof(controller_panel.cmdbuf));
 
         finish_controller_cmd();
     }
 
-    ImGui::BeginChild("Controller_OutputWindow", {0, 0}, false, ImGuiWindowFlags_AlwaysVerticalScrollbar);
+    ImGui::BeginChild("Controller_OutputWindow", {0, 0}, false, ImGuiWindowFlags_AlwaysVerticalScrollbar | ImGuiWindowFlags_AlwaysHorizontalScrollbar);
     ImGui::TextUnformatted(controller_panel.cmd_window);
     ImGui::EndChild();
 
@@ -138,7 +144,14 @@ static void s_tick_panel_file_browser() {
     file_dialog.Display();
 
     if (file_dialog.HasSelected()) {
-        printf("%s\n", file_dialog.GetSelected().string().c_str());
+        //printf("%s\n", file_dialog.GetSelected().string().c_str());
+
+        static char cmdbuf[80] = {};
+        sprintf(cmdbuf, "load_file(\"%s\")", file_dialog.GetSelected().string().c_str());
+
+        begin_controller_cmd(cmdbuf);
+        finish_controller_cmd();
+
         file_dialog.ClearSelected();
     }
 
@@ -157,8 +170,17 @@ static void s_tick_panel_output(ImGuiID master) {
 static void s_tick_panel_video_viewer(ImGuiID master) {
     ImGui::PushFont(clean_font);
 
-    ImGui::SetNextWindowDockID(master, ImGuiCond_FirstUseEver);
+    // ImGui::SetNextWindowDockID(master, ImGuiCond_FirstUseEver);
     ImGui::Begin("Video Viewer");
+
+    if (loaded_video()) {
+        frame_t *frame = get_current_frame();
+        ImGui::Image((void *)frame->texture, ImVec2(frame->width, frame->height));
+    }
+
+    float progress;
+    ImGui::SliderFloat("Time", &progress, 0.0f, 5.0f, "%.2fs");
+        
     ImGui::End();
 
     ImGui::PopFont();

@@ -14,8 +14,6 @@
 #include "video_viewer.hpp"
 
 int main() {
-    // load_avi("basket.avi");
-
     prepare_imgui();
     init_context();
     init_video_viewer();

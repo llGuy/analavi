@@ -1,4 +1,6 @@
 #include <imgui.h>
+#include <SDL.h>
+#include <malloc.h>
 #include "ui.hpp"
 #include <imfilebrowser.h>
 
@@ -9,6 +11,7 @@
 
 static ImFont *clean_font;
 static ImFont *code_font;
+static ImFont *editor_font;
 static ImGui::FileBrowser file_dialog;
 
 static TextEditor editor;
@@ -34,13 +37,15 @@ void prepare_imgui() {
 
     ImGuiStyle &style =ImGui::GetStyle();
     style.WindowRounding = 0.0f;
-    style.FrameRounding = 2.3f;
+    style.FrameRounding = 0.0f;
+    style.TabRounding = 0.0f;
     style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 0.9f);
     style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.07f, 0.07f, 0.07f, 1.0f);
     ImVec4* colors = style.Colors;
 
     clean_font = io.Fonts->AddFontFromFileTTF("Roboto-Regular.ttf", 15.0f);
     code_font = io.Fonts->AddFontFromFileTTF("SourceCodePro.ttf", 15.0f);
+    editor_font = io.Fonts->AddFontFromFileTTF("SourceCodePro.ttf", 17.0f);
 
     controller_panel.cmd_window = new char[MAX_CHARS_IN_CONTROLLER_OUTPUT];
     memset(controller_panel.cmd_window, 0, sizeof(char) * MAX_CHARS_IN_CONTROLLER_OUTPUT);
@@ -48,7 +53,10 @@ void prepare_imgui() {
     memcpy(controller_panel.cmd_window, controller_panel.prompt, strlen(controller_panel.prompt));
     controller_panel.char_pointer += strlen(controller_panel.prompt);
 
-    // auto lang = TextEditor::LanguageDefinition::
+
+    editor.SetText("");
+    editor.SetShowWhitespaces(0);
+    editor.SetColorizerEnable(0);
 }
 
 static ImGuiID s_tick_panel_master() {
@@ -110,15 +118,18 @@ void print_to_controller_output(const char *str) {
     }
 }
 
-void begin_controller_cmd(const char *cmd) {
-    print_to_controller_output(cmd);
-    print_to_controller_output("\n");
+void begin_controller_cmd(const char *cmd, bool print = 1) {
+    if (print) {
+        print_to_controller_output(cmd);
+        print_to_controller_output("\n");
+    }
 
     submit_cmdstr(cmd);
 }
 
-void finish_controller_cmd() {
-    print_to_controller_output("\n> ");
+void finish_controller_cmd(bool print = 1) {
+    if (print)
+        print_to_controller_output("\n> ");
 }
 
 static void s_tick_panel_controller(ImGuiID master) {
@@ -168,6 +179,47 @@ static void s_tick_panel_output(ImGuiID master) {
 
     ImGui::SetNextWindowDockID(master, ImGuiCond_FirstUseEver);
     ImGui::Begin("Output");
+
+    auto &record = get_record();
+
+    editor.SetReadOnly(record.is_recording);
+
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("Edit")) {
+            if (ImGui::MenuItem("Copy", "Ctrl+C", (bool *)NULL, editor.HasSelection())) {
+                editor.Copy();
+            }
+            if (ImGui::MenuItem("Cut", "Ctrl+X", (bool *)NULL, editor.HasSelection())) {
+                editor.Cut();
+            }
+            if (ImGui::MenuItem("Delete", "Del", (bool *)NULL, editor.HasSelection())) {
+                editor.Delete();
+            }
+            if (ImGui::MenuItem("Paste", "Ctrl+V", (bool *)NULL, editor.HasSelection())) {
+                editor.Paste();
+            }
+        }
+        if (ImGui::BeginMenu("View")) {
+            if (ImGui::MenuItem("Dark palette"))
+                editor.SetPalette(TextEditor::GetDarkPalette());
+            if (ImGui::MenuItem("Light palette"))
+                editor.SetPalette(TextEditor::GetLightPalette());
+            if (ImGui::MenuItem("Retro blue palette"))
+                editor.SetPalette(TextEditor::GetRetroBluePalette());
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMenuBar();
+    }
+
+    ImGui::PushFont(editor_font);
+
+    // printf("%d\n", editor.GetCursorPosition().mLine);
+
+    editor.Render("TextEditor");
+
+    ImGui::PopFont();
+    
     ImGui::End();
 
     ImGui::PopFont();
@@ -179,12 +231,162 @@ static void s_tick_panel_video_viewer(ImGuiID master) {
     ImGui::SetNextWindowDockID(master, ImGuiCond_FirstUseEver);
     ImGui::Begin("Video Viewer");
 
+    ImVec2 window_pos = ImGui::GetWindowPos();
+    ImVec2 window_size = ImGui::GetWindowSize();
+
     if (loaded_video()) {
         frame_t *frame = get_current_frame();
-        ImGui::Image((void *)frame->texture, ImVec2(frame->width, frame->height));
+        float aspect = (float)(frame->width) / (float)(frame->height);
+        float window_aspect = window_size.x / window_size.y;
 
-        float progress;
-        ImGui::SliderFloat("Time", &progress, 0.0f, 5.0f, "%.2fs");
+        float img_width = 0.0f;
+        float img_height = 0.0f;
+
+        if (window_aspect > aspect) {
+            img_height = window_size.y;
+            img_width = img_height * aspect;
+        }
+        else {
+            img_width = window_size.x;
+            img_height = img_width / aspect;
+        }
+
+        ImGui::Image((void *)frame->texture, ImVec2(img_width, img_height));
+
+        ImVec2 min = ImGui::GetItemRectMin();
+        ImVec2 max = ImGui::GetItemRectMax();
+        ImVec2 size = ImGui::GetItemRectSize();
+
+        auto *dl = ImGui::GetWindowDrawList();
+
+        auto &record = get_record();
+
+        if (record.is_recording) {
+            if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+                ImVec2 mouse_pos = ImGui::GetMousePos();
+                if (mouse_pos.x > min.x && mouse_pos.x < max.x &&
+                    mouse_pos.y > min.y && mouse_pos.y < max.y) {
+                    int x = mouse_pos.x - min.x;
+                    int y = mouse_pos.y - min.y;
+
+                    static char cmdbuf[80] = {};
+                    sprintf(cmdbuf, "add_record_point(%d, %d, %d, %d)", x, y, (int)size.x, (int)size.y);
+
+                    begin_controller_cmd(cmdbuf);
+                    finish_controller_cmd();
+
+                    const char *point_str = get_return_value<const char *>();
+
+                    // Push this to the text editor
+                    auto lines = editor.GetTextLines();
+                    auto cursor_pos = editor.GetCursorPosition();
+
+                    lines[cursor_pos.mLine].append(point_str);
+
+                    if (cursor_pos.mLine == lines.size() - 1) {
+                        lines.push_back({});
+                    }
+
+                    editor.SetCursorPosition(TextEditor::Coordinates(cursor_pos.mLine + 1, 0));
+                    
+                    editor.SetTextLines(lines);
+                }
+            }
+        }
+
+        auto &axes = get_axes();
+
+        if (axes.is_being_made) {
+            if (!axes.x1_is_set) {
+                if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+                    ImVec2 mouse_pos = ImGui::GetMousePos();
+                    if (mouse_pos.x > min.x && mouse_pos.x < max.x &&
+                        mouse_pos.y > min.y && mouse_pos.y < max.y) {
+                        int x = mouse_pos.x - min.x;
+                        int y = mouse_pos.y - min.y;
+
+                        axes.x1 = glm::vec2(x / size.x, y / size.y);
+                        axes.x1_is_set = 1;
+                    }
+                }
+            }
+            else if (!axes.x2_is_set) {
+                ImVec2 mouse_pos = ImGui::GetMousePos();
+                ImVec2 clamped = mouse_pos;
+                clamped.x = glm::clamp(mouse_pos.x, min.x, max.x);
+                clamped.y = glm::clamp(mouse_pos.y, min.y, max.y);
+
+                ImVec2 d = ImVec2();
+                dl->AddLine(ImVec2(axes.x1.x * size.x + min.x, axes.x1.y * size.y + min.y), clamped, ImGui::ColorConvertFloat4ToU32(ImVec4(1.0f, 1.0f, 1.0f, 1.0f)));
+
+                if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+                    if (mouse_pos.x > min.x && mouse_pos.x < max.x &&
+                        mouse_pos.y > min.y && mouse_pos.y < max.y) {
+                        int x = mouse_pos.x - min.x;
+                        int y = mouse_pos.y - min.y;
+
+                        axes.x2 = glm::vec2(x / size.x, y / size.y);
+                        axes.x2_is_set = 1;
+                    }
+                }
+            }
+            else {
+                ImVec2 d = ImVec2();
+                dl->AddLine(
+                    ImVec2(axes.x1.x * size.x + min.x, axes.x1.y * size.y + min.y),
+                    ImVec2(axes.x2.x * size.x + min.x, axes.x2.y * size.y + min.y),
+                    ImGui::ColorConvertFloat4ToU32(ImVec4(1.0f, 1.0f, 1.0f, 1.0f)));
+
+                axes.is_being_made = 0;
+            }
+        }
+        else if (axes.x1_is_set &&  axes.x2_is_set) {
+            glm::vec2 size_glm = glm::vec2(size.x, size.y);
+
+            glm::vec2 x1_pixel = axes.x1 * size_glm;
+            glm::vec2 x2_pixel = (axes.x2 * size_glm - x1_pixel) / (float)axes.dist + x1_pixel;
+
+            ImVec2 d = ImVec2();
+            dl->AddLine(
+                ImVec2(x1_pixel.x + min.x, x1_pixel.y + min.y),
+                ImVec2(x2_pixel.x + min.x, x2_pixel.y + min.y),
+                ImGui::ColorConvertFloat4ToU32(ImVec4(1.0f, 1.0f, 1.0f, 1.0f)));
+
+            glm::vec2 perp_vec = axes.x2 * size_glm - x1_pixel;
+            perp_vec = glm::vec2(perp_vec.y, -perp_vec.x);
+            x2_pixel = perp_vec / (float)axes.dist + x1_pixel;
+
+            d = ImVec2();
+            dl->AddLine(
+                ImVec2(x1_pixel.x + min.x, x1_pixel.y + min.y),
+                ImVec2(x2_pixel.x + min.x, x2_pixel.y + min.y),
+                ImGui::ColorConvertFloat4ToU32(ImVec4(1.0f, 1.0f, 1.0f, 1.0f)));
+        }
+
+        if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) && ImGui::IsKeyReleased(SDL_SCANCODE_W)) {
+            cmd_goto_video_frame(frame->frame + 1);
+        }
+
+        for (auto p : record.points) {
+            ImVec2 relative_pos = size;
+            relative_pos.x *= p.pos.x;
+            relative_pos.y *= p.pos.y;
+            ImVec2 position = min;
+            position.x += relative_pos.x;
+            position.y += relative_pos.y;
+            dl->AddCircleFilled(position, 4.0f, ImGui::ColorConvertFloat4ToU32(ImVec4(1.0f, 1.0f, 1.0f, 1.0f)));
+        }
+
+        static float progress = frame->time;
+        if (ImGui::SliderFloat("Time", &progress, 0.0f, frame->video_length, "%.2fs")) {
+            int time_milli = (int)(progress * 1000.0f);
+
+            static char cmdbuf[80] = {};
+            sprintf(cmdbuf, "goto_video_time(%d)", time_milli);
+
+            begin_controller_cmd(cmdbuf, 0);
+            finish_controller_cmd(0);
+        }
     }
         
     ImGui::End();
@@ -200,8 +402,6 @@ void tick_gui() {
     s_tick_panel_file_browser();
     s_tick_panel_output(master_id);
     s_tick_panel_video_viewer(master_id);
-
-
 
     ImGui::Render();
 }

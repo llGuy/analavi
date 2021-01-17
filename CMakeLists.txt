@@ -8,9 +8,10 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(OpenCV REQUIRED)
 find_package(SDL2 REQUIRED)
 
-file(GLOB_RECURSE SOURCES "imgui/lib/*.cpp" "imgui/include/*.h", "source/*.cpp" "source/*.hpp")
+file(GLOB_RECURSE SOURCES "imgui/lib/*.cpp" "imgui/include/*.h", "source/*.cpp" "source/*.hpp" "ImGuiColorTextEdit/*.cpp" "ImGuiColorTextEdit/*.h")
 
 include_directories("${CMAKE_SOURCE_DIR}/imgui/include")
+include_directories("ImGuiColorTextEdit/")
 include_directories("${OpenCV_INCLUDE_DIRS}")
 include_directories("${SDL2_INCLUDE_DIRS}")
 include_directories("lua/")

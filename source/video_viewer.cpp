@@ -1,4 +1,5 @@
 #include "ui.hpp"
+#include <glm/glm.hpp>
 #include "video_viewer.hpp"
 
 #include <opencv2/core.hpp>     // Basic OpenCV structures (cv::Mat, Scalar)
@@ -8,6 +9,8 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
+#include <vector>
 
 static struct {
     cv::VideoCapture current_capture;
@@ -19,7 +22,12 @@ static struct {
     frame_t current_frame;
 
     bool loaded;
+    bool is_playing;
+
+    axes_t axes;
 } video;
+
+static record_t record;
 
 // void load_avi(const char *path) {
 //     cv::VideoCapture capture;
@@ -54,6 +62,8 @@ static struct {
 
 void init_video_viewer() {
     video.loaded = 0;
+
+    record.points.reserve(100);
 }
 
 void destroy_texture() {
@@ -89,7 +99,7 @@ void make_texture_out_of_video(uint32_t width, uint32_t height) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    fill_texture(3);
+    fill_texture(0);
 }
 
 int32_t cmd_load_file(const char *file) {
@@ -143,8 +153,37 @@ int32_t cmd_load_file(const char *file) {
 
         video.loaded = 1;
 
+        video.current_frame.video_length = video.length;
+
         return 0;
     }
+}
+
+int32_t cmd_goto_video_frame(int frame_id) {
+    if (frame_id < video.frame_count) {
+        video.current_capture.set(cv::CAP_PROP_POS_FRAMES, frame_id);
+        fill_texture((uint32_t)frame_id);
+
+        video.current_frame.frame = frame_id;
+        video.current_frame.time = (float)frame_id / (float)video.fps;
+    }
+
+    return 0;
+}
+
+int32_t cmd_goto_video_time(int time) {
+    float t_seconds = (float)time / 1000.0f;
+
+    if (t_seconds < video.length) {
+        float frames = t_seconds * (float)video.fps;
+
+        fill_texture((uint32_t)frames);
+
+        video.current_frame.frame = frames;
+        video.current_frame.time = (float)frames / (float)video.fps;
+    }
+
+    return 0;
 }
 
 frame_t *get_current_frame() {
@@ -153,4 +192,59 @@ frame_t *get_current_frame() {
 
 bool loaded_video() {
     return video.loaded;
+}
+
+record_t &get_record() {
+    return record;
+}
+
+int32_t cmd_begin_record() {
+    record.is_recording = 1;
+
+    print_to_controller_output("Began recording...");
+
+    return 0;
+}
+
+const char *cmd_add_record_point(int x, int y, int max_x, int max_y) {
+    record_point_t p = {};
+    p.pos = glm::vec2(x, y) / glm::vec2(max_x, max_y);
+    record.points.push_back(p);
+
+    char *info_str = new char[30];
+    sprintf(info_str, "%.2f %.2f", p.pos.x, p.pos.y);
+
+    return info_str;
+}
+
+int32_t cmd_end_record() {
+    record.is_recording = 0;
+
+    print_to_controller_output("Finished recording");
+
+    return 0;
+}
+
+void begin_playing_video() {
+    video.is_playing = 1;
+}
+
+void stop_playing_video() {
+    video.is_playing = 0;
+}
+
+void tick_video_player() {
+    
+}
+
+int32_t cmd_make_axes(int dist) {
+    video.axes.flags = 0;
+    video.axes.is_being_made = 1;
+    video.axes.dist = dist;
+
+    return 0;
+}
+
+axes_t &get_axes() {
+    return video.axes;
 }

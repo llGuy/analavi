@@ -22,6 +22,7 @@ bool loaded_video();
 
 struct record_point_t {
     glm::vec2 pos; // From 0->1
+    glm::vec2 axis_space_pos;
 };
 
 struct record_t{
@@ -52,6 +53,8 @@ struct axes_t {
         };
         uint8_t flags;
     };
+
+    glm::vec2 current_mouse_pos;
 };
 
 axes_t &get_axes();

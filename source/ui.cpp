@@ -350,7 +350,7 @@ static void s_tick_panel_video_viewer(ImGuiID master) {
             dl->AddLine(
                 ImVec2(x1_pixel.x + min.x, x1_pixel.y + min.y),
                 ImVec2(x2_pixel.x + min.x, x2_pixel.y + min.y),
-                ImGui::ColorConvertFloat4ToU32(ImVec4(1.0f, 1.0f, 1.0f, 1.0f)));
+                ImGui::ColorConvertFloat4ToU32(ImVec4(1.0f, 0.0f, 0.0f, 1.0f)), 3.0f);
 
             glm::vec2 perp_vec = axes.x2 * size_glm - x1_pixel;
             perp_vec = glm::vec2(perp_vec.y, -perp_vec.x);
@@ -360,11 +360,55 @@ static void s_tick_panel_video_viewer(ImGuiID master) {
             dl->AddLine(
                 ImVec2(x1_pixel.x + min.x, x1_pixel.y + min.y),
                 ImVec2(x2_pixel.x + min.x, x2_pixel.y + min.y),
-                ImGui::ColorConvertFloat4ToU32(ImVec4(1.0f, 1.0f, 1.0f, 1.0f)));
+                ImGui::ColorConvertFloat4ToU32(ImVec4(0.0f, 1.0f, 0.0f, 1.0f)), 3.0f);
         }
 
         if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) && ImGui::IsKeyReleased(SDL_SCANCODE_W)) {
             cmd_goto_video_frame(frame->frame + 1);
+        }
+
+        if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) && ImGui::IsKeyDown(SDL_SCANCODE_LSHIFT)) {
+            auto &axes = get_axes();
+            if (ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
+                // Start moving the axes
+                auto mouse_pos = ImGui::GetMousePos();
+                axes.current_mouse_pos = glm::vec2(mouse_pos.x, mouse_pos.y);
+            }
+            else if (ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
+                auto mouse_pos = ImGui::GetMousePos();
+                glm::vec2 size_glm = glm::vec2(size.x, size.y);
+                glm::vec2 current_pos = glm::vec2(mouse_pos.x, mouse_pos.y);
+                glm::vec2 diff = current_pos - axes.current_mouse_pos;
+
+                glm::vec2 x2_x1_diff = axes.x2 - axes.x1;
+
+                glm::vec2 new_x1 = axes.x1 * size_glm + diff;
+                axes.x1 = new_x1 / size_glm;
+                axes.x2 = axes.x1 + x2_x1_diff;
+
+                axes.current_mouse_pos = current_pos;
+            }
+
+            ImGuiIO &io = ImGui::GetIO();
+            // ImGui::Text("%f", io.MouseWheel);
+            if (io.MouseWheel != 0.0f) {
+                float diff = io.MouseWheel;
+                glm::vec2 size_glm = glm::vec2(size.x, size.y);
+
+                diff = io.DeltaTime * 100.0f * diff;
+                float angle = glm::radians(diff);
+
+                glm::mat2 rot = glm::mat2(
+                    glm::cos(angle),
+                    glm::sin(angle),
+                    -glm::sin(angle),
+                    glm::cos(angle));
+
+                glm::vec2 x2_x1_diff = (axes.x2 - axes.x1) * size_glm;
+                x2_x1_diff = rot * x2_x1_diff;
+
+                axes.x2 = (axes.x1 * size_glm + x2_x1_diff) / size_glm;
+            }
         }
 
         for (auto p : record.points) {

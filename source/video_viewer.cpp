@@ -206,13 +206,58 @@ int32_t cmd_begin_record() {
     return 0;
 }
 
+static glm::vec2 s_start_from_0(const glm::vec2 &v) {
+    return glm::vec2(v.x, 1.0f - v.y);
+}
+
 const char *cmd_add_record_point(int x, int y, int max_x, int max_y) {
     record_point_t p = {};
-    p.pos = glm::vec2(x, y) / glm::vec2(max_x, max_y);
-    record.points.push_back(p);
+    p.pos = p.axis_space_pos = glm::vec2(x, y) / glm::vec2(max_x, max_y);
+    p.axis_space_pos = s_start_from_0(p.pos);
+    // Calculate the coordinates of the point int he space we defined
+    if (video.axes.x2_is_set && video.axes.x1_is_set) {
+        float aspect = float(max_x) / float(max_y);
+
+        // We first create a vector space with the pixel distance of max_x
+        // Corresponding to 1 in all directions.
+        glm::vec2 pos = p.axis_space_pos;
+        pos.y /= aspect;
+
+        glm::vec2 axis_origin = s_start_from_0(video.axes.x1);
+        glm::vec2 axis_x = (s_start_from_0(video.axes.x2) - axis_origin) / float(video.axes.dist);
+        glm::vec2 axis_y = glm::vec2(-axis_x.y, axis_x.x);
+
+        axis_origin.y /= aspect;
+        axis_x.y /= aspect;
+        axis_y.y /= aspect;
+
+        glm::mat3 t_inv = glm::mat3(1.0f);
+        t_inv[2] = glm::vec3(-axis_origin.x, -axis_origin.y, 1.0f);
+
+        glm::mat3 r_inv = glm::mat3(1.0f);
+        glm::vec2 norm_x = glm::normalize(axis_x);
+        glm::vec2 norm_y = glm::vec2(-norm_x.y, norm_x.x);
+
+        r_inv[0] = glm::vec3(norm_x.x, norm_y.x, 0.0f);
+        r_inv[1] = glm::vec3(norm_x.y, norm_y.y, 0.0f);
+        r_inv[2] = glm::vec3(0.0f, 0.0f, 1.0f);
+
+        glm::mat3 s_inv = glm::mat3(1.0f);
+        float len = glm::length(axis_x);
+        s_inv[0][0] = 1.0f / len;
+        s_inv[1][1] = 1.0f / len;
+
+        glm::vec2 translated = t_inv * glm::vec3(pos, 1.0f);
+        glm::vec2 rotated = r_inv * glm::vec3(translated, 1.0f);
+        glm::vec2 scaled = s_inv * glm::vec3(rotated, 1.0f);
+
+        p.axis_space_pos = scaled;
+    }
 
     char *info_str = new char[30];
-    sprintf(info_str, "%.2f %.2f", p.pos.x, p.pos.y);
+    sprintf(info_str, "%.2f %.2f", p.axis_space_pos.x, p.axis_space_pos.y);
+
+    record.points.push_back(p);
 
     return info_str;
 }

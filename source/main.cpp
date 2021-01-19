@@ -11,9 +11,11 @@
 
 #include "ui.hpp"
 #include "context.hpp"
+#include "input_mode.hpp"
 #include "video_viewer.hpp"
 
 int main() {
+    init_input_modes();
     prepare_imgui();
     init_context();
     init_video_viewer();

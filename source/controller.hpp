@@ -27,6 +27,7 @@ void init_controller();
   push the command
  */
 void submit_cmdstr(const char *cmdstr);
+void execute_commands();
 const char *cmd_type_to_str(command_type_t type);
 
 extern struct lua_State *g_lua_state;
